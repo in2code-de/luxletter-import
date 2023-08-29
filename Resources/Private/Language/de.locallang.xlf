@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-12-24T00:00:00Z" product-name="luxletter_import">
+        <header />
+        <body>
+            <trans-unit id="form">
+                <source>CSV Import</source>
+                <target>CSV Import</target>
+            </trans-unit>
+            <trans-unit id="form.storagePid">
+                <source>The storage page id where the receiver should be imported to</source>
+                <target>ID der Zielseite auf welcher die Empfänger abgelegt werden sollen</target>
+            </trans-unit>
+            <trans-unit id="form.luxletterGroup">
+                <source>The luxletter group where the receiver should be imported to</source>
+                <target>Luxletter-Gruppe welche die Empfänger erhalten sollen</target>
+            </trans-unit>
+            <trans-unit id="form.importFile">
+                <source>The Csv-file to be imported (comma separated)</source>
+                <target>Zu importierende CSV-Datei (kommasepariert)</target>
+            </trans-unit>
+            <trans-unit id="form.submit">
+                <target>Import</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
