@@ -138,18 +138,18 @@ typo3-add-site:
 ## Copies the Additional/DockerConfiguration.php to the correct directory
 typo3-add-dockerconfig:
 	echo "$(EMOJI_plug) Copying the docker specific configuration for TYPO3"
-	mkdir -p ./config/system
-	cp -f .project/TYPO3/additional.php ./config/system/additional.php
+	mkdir -p $(WEBROOT)/typo3conf
+	cp -f .project/TYPO3/AdditionalConfiguration.php $(WEBROOT)/typo3conf/AdditionalConfiguration.php
 
 ## Runs the TYPO3 Database Compare
 typo3-comparedb:
 	echo "$(EMOJI_leftright) Running database:updateschema"
-	docker-compose exec php ./.Build/bin/typo3 database:updateschema
+	docker-compose exec php ./.Build/bin/typo3cms database:updateschema
 
 ## Starts the TYPO3 setup process
 typo3-setupinstall:
 	echo "$(EMOJI_upright) Running install:setup"
-	docker-compose exec php ./.Build/bin/typo3 install:setup
+	docker-compose exec php ./.Build/bin/typo3cms install:setup
 
 ## Clears TYPO3 caches via typo3-console
 typo3-clearcache:
@@ -169,7 +169,7 @@ provision-fileadmin:
 	tar xvfz ../../.project/data/fileadmin.tar.gz
 
 ## To start an existing project incl. rsync from fileadmin, uploads and database dump
-install-project: lfs-fetch link-compose-file destroy add-hosts-entry init-docker .fix-mount-perms composer-install typo3-add-site typo3-add-dockerconfig typo3-setupinstall provision-fileadmin mysql-restore typo3-clearcache typo3-comparedb
+install-project: lfs-fetch link-compose-file destroy add-hosts-entry init-docker .fix-mount-perms composer-install typo3-add-site typo3-add-dockerconfig typo3-setupinstall typo3-comparedb
 	echo "---------------------"
 	echo ""
 	echo "The project is online $(EMOJI_thumbsup)"
