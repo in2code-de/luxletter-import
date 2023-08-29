@@ -1,0 +1,7 @@
+/.php-cs-fixer.cache
+/.idea
+/docker-compose.yml
+/composer.lock
+/var/
+/.Build/
+/config/

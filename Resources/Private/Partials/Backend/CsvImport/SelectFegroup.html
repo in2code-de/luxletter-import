@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:li="http://typo3.org/ns/In2code/LuxletterImport/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<div class="form-group t3js-formengine-validation-marker t3js-formengine-palette-field col-md-12">
+    <label class="t3js-formengine-label" for="luxletterGroups">
+        <f:translate id="form.luxletterGroup"/>
+    </label>
+    <div class="formengine-field-item t3js-formengine-field-item">
+        <div class="form-control-wrap">
+            <div class="form-wizards-wrap">
+                <div class="form-wizards-element">
+                    <div class="input-group">
+                        <f:form.select id="luxletterGroups"
+                                       name="import[newsletterGroup]"
+                                       required="required"
+                                       class="form-control form-control-adapt"
+                                       options="{li:selectOptions.formatFegroups(fegroups: '{newsletterGroups}')}"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

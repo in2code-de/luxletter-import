@@ -1,0 +1,22 @@
+<f:flashMessages as="flashMessages">
+    <f:for each="{flashMessages}" as="flashMessage">
+        <f:if condition="{flashMessage.severity} == 0">
+            <f:render section="ok" arguments="{flashMessage: flashMessage}"/>
+        </f:if>
+        <f:if condition="{flashMessage.severity} == 2">
+            <f:render section="error" arguments="{flashMessage: flashMessage}"/>
+        </f:if>
+    </f:for>
+</f:flashMessages>
+
+<f:section name="error">
+    <div class="t3js-infobox callout callout-sm callout-warning">
+        <h4 class="callout-title">{flashMessage.message}</h4>
+    </div>
+</f:section>
+
+<f:section name="ok">
+    <div class="t3js-infobox callout callout-sm callout-success">
+        <h4 class="callout-title">{flashMessage.message}</h4>
+    </div>
+</f:section>

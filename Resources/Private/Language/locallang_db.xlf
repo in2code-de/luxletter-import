@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2015-12-24T00:00:00Z" product-name="luxletter_import">
+        <header />
+        <body>
+			<trans-unit id="mlang_tabs_tab">
+				<source>CSV Import</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tabdescr">
+				<source>CSV Import</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tablabel">
+				<source>CSV Import</source>
+			</trans-unit>
+			<trans-unit id="csvimport.error.noFile">
+				<source>No File uploaded</source>
+			</trans-unit>
+			<trans-unit id="csvimport.error.noStoragePid">
+				<source>No Storage pageId set</source>
+			</trans-unit>
+			<trans-unit id="csvimport.error.noluxletterGroup">
+				<source>No luxletter group selected</source>
+			</trans-unit>
+			<trans-unit id="csvimport.success.import">
+				<source>File imported successfully</source>
+			</trans-unit>
+            <trans-unit id="backend_layout.NewsletterPage.title">
+                <source>Newsletter Page</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.colPos.0">
+                <source>Content</source>
+            </trans-unit>
+
+            <trans-unit id="ctype.teaser.flexform.darkbackground">
+                <source>Dark Background</source>
+            </trans-unit>
+
+            <trans-unit id="ctype.newsletter_content">
+                <source>Newsletter Content</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.flexform">
+                <source>Button configuration</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.flexform.buttontext">
+                <source>Button text</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.flexform.buttonlink">
+                <source>Button link</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.description">
+                <source>Newsletter Content</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.layout.default">
+                <source>Default</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.layout.grey">
+                <source>Grey Background</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.layout.blue">
+                <source>Blue Background</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.header_layout">
+                <source>Header layout</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.imageorient">
+                <source>Image orientation</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.bodytext.description">
+                <source>Won't be displayed if "Image above text" is selected!</source>
+            </trans-unit>
+            <trans-unit id="ctype.newsletter_content.header.description">
+                <source>Won't be displayed if "Image above text" is selected or an image is added without bodytext!</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
