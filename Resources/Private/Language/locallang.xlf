@@ -18,6 +18,9 @@
 			<trans-unit id="form.submit">
 				<source>Import</source>
 			</trans-unit>
+			<trans-unit id="form.truncateStorage">
+				<source>Truncate users in folder before input?</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

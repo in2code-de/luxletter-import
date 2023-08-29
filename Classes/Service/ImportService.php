@@ -19,9 +19,13 @@ class ImportService
     public function importNewsletterReceiver(
         array $importFile,
         int $newsletterReceiverStoragePid,
-        int $newsletterGroup
+        int $newsletterGroup,
+        bool $truncate
     ): void {
-        $this->frontendUserRepository->hardDeleteFrontendUserFromStoragePageId($newsletterReceiverStoragePid);
+        if ($truncate) {
+            $this->frontendUserRepository->hardDeleteFrontendUserFromStoragePageId($newsletterReceiverStoragePid);
+        }
+
         $receiverMails = $this->parseCsvFileToArray($importFile);
         $enrichedReceiverMails = $this->addFieldsToReceiver(
             $receiverMails,

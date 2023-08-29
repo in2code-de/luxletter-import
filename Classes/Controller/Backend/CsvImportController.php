@@ -33,12 +33,13 @@ class CsvImportController extends ActionController
         ]);
 
         if (!empty($import)) {
+            $truncate = (bool)($import['truncate'] ?? false);
             $file = $import['importFile'] ?? $this->throwErrorMessage('noFile');
             $storagePid = (int)($import['storagePid'] ?? $this->throwErrorMessage('noStoragePid'));
             $newsletterGroupUid = (int)($import['newsletterGroup'] ?? $this->throwErrorMessage('noluxletterGroup'));
 
             if ($this->isFileValid($file)) {
-                $this->importService->importNewsletterReceiver($file, $storagePid, $newsletterGroupUid);
+                $this->importService->importNewsletterReceiver($file, $storagePid, $newsletterGroupUid, $truncate);
                 $this->throwSuccessMessage();
             } else {
                 $this->throwErrorMessage('noFile');

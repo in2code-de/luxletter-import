@@ -22,6 +22,9 @@
             <trans-unit id="form.submit">
                 <target>Import</target>
             </trans-unit>
+            <trans-unit id="form.truncateStorage">
+                <target>Alle Benutzer im Ordner vor dem import löschen?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
