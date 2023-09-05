@@ -31,6 +31,7 @@ class FrontendUserRepository
                 [
                     'email',
                     'pid',
+                    'crdate',
                     'usergroup',
                     'username',
                     'password'

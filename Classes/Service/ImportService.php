@@ -52,6 +52,7 @@ class ImportService
             $receiverMails[$index] = [
                 $receiverMail,
                 $newsletterReceiverStoragePid,
+                time(),
                 $newsletterGroup,
                 $receiverMail,
                 '$2y$12$An3DZFDgAPet8/GKa/PzROxJdl/wA8Gl44iCTAl2FvAXj1VMfI/4.'
