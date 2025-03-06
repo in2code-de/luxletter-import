@@ -51,7 +51,7 @@ class CsvImportController extends ActionController
             'newsletterGroups',
             $this->frontendUserGroupRepository->findLuxletterGroups(),
         );
-        return $moduleTemplate->renderResponse();
+        return $moduleTemplate->renderResponse('CsvImport/Import');
     }
 
     protected function handleImport(array $import): void

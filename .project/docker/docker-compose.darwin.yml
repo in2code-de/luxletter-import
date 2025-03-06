@@ -15,7 +15,7 @@ services:
           - ${HOST}
 
   php:
-    image: in2code/php-dev:8.1-fpm
+    image: in2code/php-dev:8.2-fpm
     volumes:
       - ./:/app/:cached
       - typo3var:/app/${TYPO3_CACHE_DIR}/:nocopy
