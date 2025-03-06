@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true"
+>
+    <f:layout name="Module"/>
+
+    <f:section name="Content">
+        <f:flashMessages />
+
+        <f:form action="import" name="import" enctype="multipart/form-data">
+            <div class="typo3-TCEforms">
+                <div class="tabpanel">
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel">
+                            <fieldset class="form-section">
+                                <h3>
+                                    <f:translate id="form"/>
+                                </h3>
+                                <f:render partial="Backend/CsvImport/FlashMessages" arguments="{_all}"/>
+                                <div class="row">
+                                    <f:render partial="Backend/CsvImport/SelectFegroup" arguments="{_all}"/>
+                                    <f:render partial="Backend/CsvImport/NumberStoragePid" arguments="{_all}"/>
+                                    <f:render partial="Backend/CsvImport/FileUpload" arguments="{_all}"/>
+                                    <f:render partial="Backend/CsvImport/Submit" arguments="{_all}"/>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </f:form>
+    </f:section>
+</html>

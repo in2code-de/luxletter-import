@@ -7,14 +7,23 @@ namespace In2code\LuxletterImport\Controller\Backend;
 use In2code\LuxletterImport\Domain\Repository\FrontendUserGroupRepository;
 use In2code\LuxletterImport\Service\ImportService;
 use In2code\LuxletterImport\Utility\FileUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Http\UploadedFile;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
+use function pathinfo;
+
+use const PATHINFO_EXTENSION;
+use const UPLOAD_ERR_OK;
 
 class CsvImportController extends ActionController
 {
     protected ?ImportService $importService = null;
-    protected ?FrontendUserGroupRepository  $frontendUserGroupRepository = null;
+    protected ?FrontendUserGroupRepository $frontendUserGroupRepository = null;
+    protected ?ModuleTemplateFactory $moduleTemplateFactory = null;
 
     public function injectImportService(ImportService $importService): void
     {
@@ -26,57 +35,79 @@ class CsvImportController extends ActionController
         $this->frontendUserGroupRepository = $frontendUserGroupRepository;
     }
 
-    public function importAction(array $import = [])
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
     {
-        $this->view->assignMultiple([
-            'newsletterGroups' => $this->frontendUserGroupRepository->findLuxletterGroups(),
-        ]);
-
-        if (!empty($import)) {
-            $truncate = (bool)($import['truncate'] ?? false);
-            $file = $import['importFile'] ?? $this->throwErrorMessage('noFile');
-            $storagePid = (int)($import['storagePid'] ?? $this->throwErrorMessage('noStoragePid'));
-            $newsletterGroupUid = (int)($import['newsletterGroup'] ?? $this->throwErrorMessage('noluxletterGroup'));
-
-            if ($this->isFileValid($file)) {
-                $this->importService->importNewsletterReceiver($file, $storagePid, $newsletterGroupUid, $truncate);
-                $this->throwSuccessMessage();
-            } else {
-                $this->throwErrorMessage('noFile');
-            }
-        }
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
     }
 
-    protected function throwSuccessMessage(): void
+    public function importAction(array $import = []): ResponseInterface
+    {
+        if (!empty($import)) {
+            $this->handleImport($import);
+        }
+
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $moduleTemplate->assign(
+            'newsletterGroups',
+            $this->frontendUserGroupRepository->findLuxletterGroups(),
+        );
+        return $moduleTemplate->renderResponse('CsvImport/Import');
+    }
+
+    protected function handleImport(array $import): void
+    {
+        $truncate = (bool) ($import['truncate'] ?? false);
+        $files = $this->request->getUploadedFiles();
+        if (!isset($files['import']['importFile']) || !$files['import']['importFile'] instanceof UploadedFile) {
+            $this->addErrorMessage('noFile');
+            return;
+        }
+        /** @var UploadedFile $file */
+        $file = $files['import']['importFile'];
+        if (!$this->isFileValid($file)) {
+            $this->addErrorMessage('noFile');
+        }
+
+        if (!isset($import['storagePid'])) {
+            $this->addErrorMessage('noStoragePid');
+            return;
+        }
+        $storagePid = (int) $import['storagePid'];
+
+        if (!isset($import['newsletterGroup'])) {
+            $this->addErrorMessage('noluxletterGroup');
+            return;
+        }
+        $newsletterGroupUid = (int) $import['newsletterGroup'];
+
+        $this->importService->importNewsletterReceiver($file, $storagePid, $newsletterGroupUid, $truncate);
+        $this->addSuccessMessage();
+    }
+
+    protected function addSuccessMessage(): void
     {
         $this->addFlashMessage(
             LocalizationUtility::translate(
-                'LLL:EXT:luxletter_import/Resources/Private/Language/locallang_db.xlf:csvimport.success.import'
-            )
+                'LLL:EXT:luxletter_import/Resources/Private/Language/locallang_db.xlf:csvimport.success.import',
+            ),
         );
     }
 
-    protected function throwErrorMessage(string $key): void
+    protected function addErrorMessage(string $key): void
     {
         $this->addFlashMessage(
             LocalizationUtility::translate(
-                'LLL:EXT:luxletter_import/Resources/Private/Language/locallang_db.xlf:csvimport.error.' . $key
+                'LLL:EXT:luxletter_import/Resources/Private/Language/locallang_db.xlf:csvimport.error.' . $key,
             ),
             '',
-            AbstractMessage::ERROR
+            ContextualFeedbackSeverity::ERROR,
         );
     }
 
-    protected function isFileValid(array $file): bool
+    protected function isFileValid(UploadedFile $file): bool
     {
-        if (FileUtility::isFileSelected($file) &&
-            FileUtility::checkFileSize($file) &&
-            FileUtility::isFileExtensionAllowed($file) &&
-            !FileUtility::hasFileErrors($file)
-        ) {
-            return true;
-        }
-
-        return false;
+        return $file->getError() === UPLOAD_ERR_OK
+            && $file->getSize() > 0
+            && pathinfo($file->getClientFilename(), PATHINFO_EXTENSION) === 'csv';
     }
 }
